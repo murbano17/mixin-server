@@ -123,6 +123,7 @@ router.post("/payment", isLoggedIn(), async (req, res, next) => {
     res.send({ message: "Succesfull payment" });
   } catch (error) {
     console.log(error);
+    res.json({ message: error.raw.message });
   }
 });
 
