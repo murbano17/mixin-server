@@ -75,7 +75,6 @@ router.post("/deleteproduct", isLoggedIn(), async (req, res, next) => {
           console.log(err);
           return res.send(err);
         }
-        console.log(cart);
         res.status(200).json(cart);
       }
     ).populate("products.product");
@@ -89,8 +88,6 @@ router.post("/addquantity", isLoggedIn(), async (req, res, next) => {
     const _id = req.body._id;
     const quantity = req.body.quantity;
     const userId = req.session.currentUser._id;
-    console.log(userId);
-    console.log(_id);
 
     const shoppingCart = await ShoppingCart.findOneAndUpdate(
       {
@@ -100,7 +97,6 @@ router.post("/addquantity", isLoggedIn(), async (req, res, next) => {
 
       { $set: { "products.$.quantity": quantity } }
     );
-    console.log(shoppingCart);
     res.status(200).json(shoppingCart);
   } catch (error) {
     console.log("Error to set the product");
@@ -119,7 +115,6 @@ router.post("/payment", isLoggedIn(), async (req, res, next) => {
       confirm: true,
     });
 
-    console.log(payment);
     res.send({ message: "Succesfull payment" });
   } catch (error) {
     console.log(error);
