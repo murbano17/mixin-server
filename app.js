@@ -30,7 +30,7 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: [process.env.PUBLIC_DOMAIN],
+    origin: [process.env.PUBLIC_DOMAIN, 'https://mixinbeauty.herokuapp.com', 'https://mixinbeauty.herokuapp.com'],
   })
 );
 app.use((req, res, next) => {
@@ -73,6 +73,12 @@ app.use(express.static(path.join(__dirname, "public")));
 // ROUTER MIDDLEWARE
 app.use("/api/auth", auth);
 app.use("/api/products", productRouter);
+
+
+app.use((req, res) => {
+  // If no routes match, send them the React HTML.
+  res.sendFile(__dirname + "/public/index.html");
+});
 
 // ERROR HANDLING
 // catch 404 and forward to error handler
